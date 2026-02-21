@@ -29,7 +29,8 @@ function dz = dynamics_mp(t, z, f)
 w0    = 2.0;   % natural frequency [rad/s]
 zeta  = 0.05;  % damping ratio [-]
 alpha = 0.35;  % parametric excitation amplitude [-]
-omega = 3.0;   % excitation frequency [rad/s]
+omegaHz = 5.3;                % excitation frequency [Hz]
+omega   = 2*pi*omegaHz;       % excitation frequency [rad/s]
 b     = 1.0;   % input gain [rad/(s^2 * u)]
 
 % --------------------------- Dimension checks ------------------------------

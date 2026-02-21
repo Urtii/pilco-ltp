@@ -14,7 +14,7 @@
 clear all; close all;
 settings_mp;
 
-Tsim = 500;
+Tsim = 5000;
 
 % Random open-loop rollout data generation.
 start = gaussian(mu0, S0);
@@ -55,6 +55,12 @@ fprintf('  LTP Floquet SSM (N=%d): %.6f\n', nPhase, rmseLTP);
 fprintf('  LTI SSM baseline   (N=1): %.6f\n', rmseLTI);
 fprintf('  ARX(2,1) baseline       : %.6f\n\n', rmseARX);
 
+% Print identified Floquet/LTI state transition and control matrices (A_F, B_F).
+fprintf('Identified LTP model A_F:\n'); disp(modelLTP.A);
+fprintf('Identified LTP model B_F:\n'); disp(modelLTP.B);
+fprintf('Identified LTI model A_F:\n'); disp(modelLTI.A);
+fprintf('Identified LTI model B_F:\n'); disp(modelLTI.B);
+
 %% 4) Visualization: output predictions
 figure(1); clf;
 plot(yTrue, 'k', 'LineWidth', 1.0); hold on;
@@ -82,6 +88,25 @@ plot(1:modelLTP.N, Cstack(:,2), 'm-s', 'LineWidth', 1);
 legend('C_p(1)', 'C_p(2)', 'Location', 'best');
 xlabel('Phase index p'); ylabel('Observation coefficients');
 title('LTP identification: phase-dependent observation matrix C_p');
+grid on;
+
+%% 6) Visualization: simulated system dynamics traces
+t = (0:Tsim-1)' * dt;
+figure(3); clf;
+subplot(3,1,1);
+plot(t, latent(1:end-1,1), 'k', 'LineWidth', 1.0);
+ylabel('theta [rad]');
+title('Mathieu pendulum simulation traces');
+grid on;
+
+subplot(3,1,2);
+plot(t, latent(1:end-1,2), 'b', 'LineWidth', 1.0);
+ylabel('theta\_dot [rad/s]');
+grid on;
+
+subplot(3,1,3);
+plot(t, u, 'r', 'LineWidth', 1.0);
+xlabel('time [s]'); ylabel('u');
 grid on;
 
 %% ------------------------------ Local functions --------------------------
