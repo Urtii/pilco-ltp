@@ -84,7 +84,7 @@ opt.verbosity = 1;
 opt.method = 'BFGS';
 
 % 8) Plot verbosity.
-plotting.verbosity = 0;
+plotting.verbosity = 1;
 
 % 9) Scenario initializations.
 x = []; y = [];
